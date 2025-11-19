@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kasımpatı✨</title>
+<style>
+  :root{
+    --bg:#0d0b16;
+  }
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--bg);
+    font-family:Arial, Helvetica, sans-serif;
+    color:#fff;
+  }
+.flower-title {
+  position: absolute;      /* wrap içinde konumlandır */
+  top: -120px;              /* çiçeğin üstüne */
+  left: 50%;               /* yatay ortala */
+  transform: translateX(-50%);
+  font-family: 'Arial', sans-serif;
+  font-size: 28px;
+  color: #fbfbfb;          /* çiçek tonuyla uyumlu pembe */
+  text-shadow: 0 0 6px #b7c932, 0 0 12px #8e9c28; /* neon glow efekti */
+  z-index: 3;              /* çiçek üstünde gözükmesi için */
+  font-style: italic;  
+}
+
+  /* Konteyner */
+  .wrap{
+    position:relative;
+    width:300px;
+    height:360px;
+  }
+
+  /* Toggle butonu - sağ üst */
+  .toggle {
+    position:fixed;
+      bottom: 50px;   /* sayfanın altından 20px yukarıda */
+    left: 50%;      /* yatayda ortala */
+    transform: translateX(-50%);
+    background:#bbb934;
+    color:#484d11;
+    border-radius:20px;
+    border:2px solid rgba(255,255,255,0.06);
+    padding:8px 12px;
+    cursor:pointer;
+    font-weight:600;
+  
+   box-shadow: 
+        0 0 4px rgb(235, 241, 237),   /* küçük glow */
+        0 0 8px rgb(216, 225, 218),   /* orta glow */
+        inset 0 3px 6px rgba(0,0,0,0.3); /* iç gölge */
+    
+    transition: all 0.3s ease;
+    user-select:none;
+  }
+  .toggle.active{
+    background:#2ecc71;
+    color:#04260a;
+  }
+
+  /* Flower (orijinal animasyon korunuyor) */
+  .flower {
+    width:240px;
+    height:240px;
+    position:relative;
+    margin:0 auto;
+    transform-origin:center;
+    transform:scale(0);
+    animation: pop 280ms ease forwards;
+  }
+  @keyframes pop {
+    to { transform:scale(1); }
+  }
+
+  /* Petal (orijinal) */
+.petal {
+    width:58px; height:136px;
+    background:linear-gradient(180deg,#ff7ac9,#ff4fa8 70%);
+    border-radius:50% 50% 0 0;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform-origin: bottom center;
+    transform: translate(-50%,-100%) rotate(var(--r)) scale(0);
+    animation: open 820ms cubic-bezier(.2,.9,.3,1) forwards;
+    animation-delay: var(--d);
+    opacity:0.98;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2) inset,
+                0 0 12px #ff66c4, 0 0 20px #c4338c; /* neon glow ekledik */
+}
+
+.center {
+    width:50px; height:50px;
+    background:radial-gradient(circle at 35% 30%, #ffd3ea, #ff4fa8 60%);
+    border-radius:50%;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) scale(0);
+    animation:centerPop 700ms cubic-bezier(.2,.9,.3,1) forwards;
+    animation-delay: 300ms;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25),
+                0 0 20px #ff66c4, 0 0 30px #ff66c4; /* neon glow ekledik */
+}
+
+
+  @keyframes open {
+    to {
+      transform: translate(-50%,-100%) rotate(var(--r)) scale(1);
+    }
+  }
+
+
+  @keyframes centerPop {
+    to { transform:translate(-50%,-50%) scale(1); }
+  }
+
+  /* --- SAP ve yapraklar --- */
+  /* sap'ı çiçeğin arkasında göstermek için düşük z-index */
+.stem {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 240px;
+    background: linear-gradient(180deg,#1c5a2b,#28a745); /* doğal yeşil tonları */
+    border-radius: 6px;
+    z-index: 0; /* yaprak ve çiçek üstte kalsın */
+    
+    /* Hafif glow, yapraktan daha az */
+    box-shadow: 
+        0 0 4px rgb(16, 193, 60),   /* küçük glow */
+        0 0 8px rgb(31, 156, 67),   /* orta glow */
+        inset 0 3px 6px rgba(0,0,0,0.3); /* iç gölge */
+    
+    transition: all 0.3s ease;
+}
+
+.leaf {
+  position: absolute;
+  width: 50px;
+  height: 28px;
+  background: linear-gradient(180deg,#2ea65a,#1e7a37);
+  border-radius: 40px;
+  z-index: 2; /* 0 ise glow altta kalır, görünmez */
+  
+   box-shadow: 
+        0 0 4px rgb(16, 193, 60),   /* küçük glow */
+        0 0 8px rgb(31, 156, 67),   /* orta glow */
+        inset 0 3px 6px rgba(0,0,0,0.3); /* iç gölge */
+    
+    transition: all 0.3s ease;
+}
+
+/* Sol yaprak */
+.leaf.left {
+  transform: rotate(-28deg);
+  left: calc(50% - 60px);
+  top: 120%;
+}
+
+/* Sağ yaprak */
+.leaf.right {
+  transform: rotate(24deg);
+  left: calc(50% + 12px);
+  top: 120%;
+}
+
+/* Opsiyonel: hafif yanıp sönme animasyonu */
+
+
+ 
+
+  /* responsive küçültme */
+  @media(max-width:420px){
+    .wrap{ transform:scale(0.9); }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<h1 class="flower-title">Kasımpatı✨</h1>
+  <!-- Toggle (hep b) -->
+  <div id="toggle" class="toggle" title="Yeniden AÇ (loop)">
+    Yeniden Aç
+  </div>
+
+  <!-- Flower: SAP + LEAF + PETALS + CENTER -->
+  <div class="flower" id="flower">
+    <!-- sap (arkada) -->
+    <div class="stem"></div>
+    <div class="leaf left"></div>
+    <div class="leaf right"></div>
+
+    <!-- 16 Yaprak (orijinal konum ve delay ile) -->
+    <div class="petal" style="--r:0deg;   --d:0.10s"></div>
+    <div class="petal" style="--r:22deg;  --d:0.15s"></div>
+    <div class="petal" style="--r:45deg;  --d:0.20s"></div>
+    <div class="petal" style="--r:67deg;  --d:0.25s"></div>
+    <div class="petal" style="--r:90deg;  --d:0.30s"></div>
+    <div class="petal" style="--r:112deg; --d:0.35s"></div>
+    <div class="petal" style="--r:135deg; --d:0.40s"></div>
+    <div class="petal" style="--r:157deg; --d:0.45s"></div>
+    <div class="petal" style="--r:180deg; --d:0.50s"></div>
+    <div class="petal" style="--r:202deg; --d:0.55s"></div>
+    <div class="petal" style="--r:225deg; --d:0.60s"></div>
+    <div class="petal" style="--r:247deg; --d:0.65s"></div>
+    <div class="petal" style="--r:270deg; --d:0.70s"></div>
+    <div class="petal" style="--r:292deg; --d:0.75s"></div>
+    <div class="petal" style="--r:315deg; --d:0.80s"></div>
+    <div class="petal" style="--r:337deg; --d:0.85s"></div>
+
+    <!-- center -->
+    <div class="center"></div>
+  </div>
+</div>
+
+<script>
+  // Elementler
+  const toggle = document.getElementById('toggle');
+const petalEls = document.querySelectorAll('.petal');
+const centerEl = document.querySelector('.center');
+const flowerEl = document.getElementById('flower');
+
+let isLoop = false;
+
+function restartAnimations() {
+  flowerEl.style.animation = 'none';
+  petalEls.forEach(p => p.style.animation = 'none');
+  centerEl.style.animation = 'none';
+
+  void flowerEl.offsetWidth; // DOM reflow
+
+  flowerEl.style.animation = '';
+  petalEls.forEach(p => p.style.animation = '');
+  centerEl.style.animation = '';
+}
+
+toggle.addEventListener('click', () => {
+  isLoop = !isLoop;
+
+  const iter = isLoop ? 'infinite' : '1';
+  petalEls.forEach(p => p.style.animationIterationCount = iter);
+  centerEl.style.animationIterationCount = iter;
+
+  restartAnimations();
+});
+
+</script>
+
+</body>
+</html>
