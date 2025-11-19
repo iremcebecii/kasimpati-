@@ -1,2 +1,1 @@
-# kasimpati-
-kasımpatı çiçeği
+
